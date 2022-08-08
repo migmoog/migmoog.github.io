@@ -3,9 +3,9 @@ body {
 }
 
 .welcome-face {
-    /* float: right; */
     position: relative;
-    left: 75%;
+    float: right;
+    /* left: 75%; */
 }
 
 .container {
@@ -22,4 +22,14 @@ body {
 
 .game-title {
     margin-top: 5px;
+}
+
+.thumbnail:hover {
+    animation: darken 1s;
+}
+
+@keyframes darken {
+    100% {
+        color: rgb(50, 50, 50);
+    }
 }
