@@ -39,15 +39,16 @@ h1 {
 #intro-blurb {
     margin: 0%;
     font-family: "JetBrains Mono";
+    text-align: left;
     /* position: relative; */
 }
 
 @keyframes darken {
-    from {
+    0% {
         filter: grayscale(0%);
     }
 
-    to {
+    100% {
         filter: grayscale(100%);
     }
 }
@@ -57,7 +58,7 @@ h1 {
     max-height: 100%;
 
     animation-name: darken;
-    animation-duration: 0.25s;
+    animation-duration: 1s;
     animation-play-state: paused;
 }
 
