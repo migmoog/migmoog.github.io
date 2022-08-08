@@ -1,0 +1,25 @@
+body {
+    background-color: #d6cbbf;
+}
+
+.welcome-face {
+    /* float: right; */
+    position: relative;
+    left: 75%;
+}
+
+.container {
+    display: flex;
+    flex-flow: row wrap;
+    /* margin: 50px; */
+    width: 100%;
+}
+
+.game {
+    margin: 25px;
+    text-align: center;
+}
+
+.game-title {
+    margin-top: 5px;
+}
