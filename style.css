@@ -1,35 +1,79 @@
+@font-face {
+    font-family: "Newgrounds";
+    src: url("font/NewgroundsFont-Regular.otf") format('opentype');
+}
+
+@font-face {
+    font-family: "JetBrains Mono";
+    src: url("font/JetBrainsMono-Regular.ttf") format("tff");
+}
+
 body {
-    background-color: #d6cbbf;
+    background-color: #ffdfba;
+}
+
+h1 {
+    width: 60%;
+    height: auto;
+    margin-left: 2.5%;
+    margin-top: 5%;
+    position: absolute;
+    font-size: 100px;
+    font-family: 'Newgrounds', Fallback, sans-serif;
+    font-style: italic;
 }
 
 .welcome-face {
-    position: relative;
     float: right;
-    /* left: 75%; */
+    text-align: right;
 }
 
 .container {
     display: flex;
     flex-flow: row wrap;
+    justify-content: center;
     /* margin: 50px; */
     width: 100%;
 }
 
+#intro-blurb {
+    margin: 0%;
+    font-family: "JetBrains Mono";
+    /* position: relative; */
+}
+
+@keyframes darken {
+    from {
+        filter: grayscale(0%);
+    }
+
+    to {
+        filter: grayscale(100%);
+    }
+}
+
+.thumbnail {
+    max-width: 100%;
+    max-height: 100%;
+
+    animation-name: darken;
+    animation-duration: 0.25s;
+    animation-play-state: paused;
+}
+
+.thumbnail:hover {
+    animation-fill-mode: forwards;
+    animation-play-state: running;
+}
+
 .game {
     margin: 25px;
+    margin-bottom: 0%;
     text-align: center;
+    width: 320px;
+    height: 180px;
 }
 
 .game-title {
     margin-top: 5px;
-}
-
-.thumbnail:hover {
-    animation: darken 1s;
-}
-
-@keyframes darken {
-    100% {
-        color: rgb(50, 50, 50);
-    }
 }
