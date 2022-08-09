@@ -36,16 +36,26 @@ h1 {
     display: flex;
     flex-flow: row wrap;
     justify-content: center;
-    /* margin: 50px; */
     width: 100%;
+    margin-bottom: 7.5%;
 }
 
 p {
     font-family: "JetBrains Mono";
 }
 
+.section-marker {
+    text-align: center;
+    font-family: "Newgrounds";
+    font-size: 32px;
+    height: 10%;
+    /* margin-bottom: 0%; */
+    clear: both;
+}
+
 #intro-blurb {
     margin: 0%;
+    margin-bottom: 30px;
     text-align: left;
     margin-left: 5%;
     margin-right: 5%;
@@ -76,7 +86,6 @@ p {
 
 .game {
     margin: 25px;
-    margin-bottom: 0%;
     text-align: center;
     width: 320px;
     height: 180px;
