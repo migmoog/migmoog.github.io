@@ -23,9 +23,13 @@ h1 {
     font-style: italic;
 }
 
-.welcome-face {
+#welcome-face {
     float: right;
     text-align: right;
+}
+
+#welcome-face>img {
+    margin-right: 64px;
 }
 
 .container {
@@ -36,20 +40,24 @@ h1 {
     width: 100%;
 }
 
+p {
+    font-family: "JetBrains Mono";
+}
+
 #intro-blurb {
     margin: 0%;
-    font-family: "JetBrains Mono";
     text-align: left;
-    /* position: relative; */
+    margin-left: 5%;
+    margin-right: 5%;
 }
 
 @keyframes darken {
     0% {
-        filter: grayscale(0%);
+        filter: brightness(100%);
     }
 
     100% {
-        filter: grayscale(100%);
+        filter: brightness(50%);
     }
 }
 
@@ -57,14 +65,13 @@ h1 {
     max-width: 100%;
     max-height: 100%;
 
-    animation-name: darken;
-    animation-duration: 1s;
-    animation-play-state: paused;
+    filter: brightness(100%);
 }
 
 .thumbnail:hover {
+    animation-name: darken;
+    animation-duration: 1s;
     animation-fill-mode: forwards;
-    animation-play-state: running;
 }
 
 .game {
