@@ -31,6 +31,20 @@ for (let i = 0; i < GAME_THUMBS.length; i++) {
             thumbnail.style.animationFillMode = null;
         });
     } else {
-        g.children['info'].style.color = 'brown';
+        g.addEventListener('touchstart', (event) => {
+            if (!thumbClicks[i]) {
+                thumbClicks[i] = true;
+                
+                thumbnail.style.animationName = 'darken';
+                thumbnail.style.animationDuration = '0.25s';
+                thumbnail.style.animationFillMode = 'forward';
+                g.children['info'].style.color = 'white';
+            } else {
+                
+            }
+        });
+        thumbnail.addEventListener('animationend', (event) => {
+            thumbnail.style.filter = "brightness(50%)";
+        });
     }
 }
