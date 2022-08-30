@@ -6,9 +6,12 @@ let onMobile = (
 
 console.log(GAME_THUMBS)
 
+const thumbClicks = new Array(GAME_THUMBS.length);
+
 for (let i = 0; i < GAME_THUMBS.length; i++) {
     const g = GAME_THUMBS[i];
     const thumbnail = g.querySelector('.thumbnail');
+    thumbClicks[i] = false;
 
     if (!onMobile) {
         g.addEventListener('mouseover', (event) => {
@@ -28,6 +31,6 @@ for (let i = 0; i < GAME_THUMBS.length; i++) {
             thumbnail.style.animationFillMode = null;
         });
     } else {
-        g.style.color = 'yellow'
+        g.children['info'].style.color = 'brown';
     }
 }
