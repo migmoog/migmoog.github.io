@@ -77,11 +77,13 @@ p {
 
     filter: brightness(100%);
 }
-
-.thumbnail:hover {
-    animation-name: darken;
-    animation-duration: 1s;
-    animation-fill-mode: forwards;
+#info {
+    position: absolute;
+    color: rgba(255, 255, 255, 0);
+    top: 0%;
+    text-align: left;
+    padding-left: 2%;
+    font-size: 14px;
 }
 
 .game {
@@ -89,6 +91,7 @@ p {
     text-align: center;
     width: 320px;
     height: 180px;
+    position: relative;
 }
 
 .game-title {
