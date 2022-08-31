@@ -32,7 +32,8 @@ for (let i = 0; i < GAME_THUMBS.length; i++) {
             thumbnail.style.animationFillMode = null;
         });
     } else {
-
+        // oops
+        link.style.pointerEvents = 'none';
         g.addEventListener('touchstart', (event) => {
             if (!thumbClicks[i]) {
                 thumbClicks[i] = true;
@@ -43,7 +44,7 @@ for (let i = 0; i < GAME_THUMBS.length; i++) {
                 g.children['info'].style.color = 'white';
             } else {
                 link.style.pointerEvents = 'auto';
-
+                
             }
         });
         thumbnail.addEventListener('animationend', (event) => {
