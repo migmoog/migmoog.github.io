@@ -4,8 +4,6 @@ let onMobile = (
     navigator.userAgent.match(/iPhone/i)
 );
 
-console.log(GAME_THUMBS)
-
 const thumbClicks = new Array(GAME_THUMBS.length);
 
 for (let i = 0; i < GAME_THUMBS.length; i++) {
@@ -35,17 +33,18 @@ for (let i = 0; i < GAME_THUMBS.length; i++) {
         // oops
         link.style.pointerEvents = 'none';
         g.addEventListener('touchstart', (event) => {
-            if (!thumbClicks[i]) {
-                thumbClicks[i] = true;
+            with (thumbnail.style) {
+                animationName = thumbClicks[i] ? null : 'darken';
+                animationDuration = thumbClicks[i] ? null : '0.25s';
+                animationFillMode = thumbClicks[i] ? null : 'forward';
 
-                thumbnail.style.animationName = 'darken';
-                thumbnail.style.animationDuration = '0.25s';
-                thumbnail.style.animationFillMode = 'forward';
-                g.children['info'].style.color = 'white';
-            } else {
-                link.style.pointerEvents = 'auto';
-                
+                if (thumbClicks[i])
+                    filter = 'brightness(100%)';
             }
+            g.children['info'].style.color = thumbClicks[i] ? 'transparent' : 'white';
+
+            thumbClicks[i] = !thumbClicks[i];
+            thumbnail.style.pointerEvents = !thumbClicks[i] ? 'auto' : 'none';
         });
         thumbnail.addEventListener('animationend', (event) => {
             thumbnail.style.filter = "brightness(50%)";
