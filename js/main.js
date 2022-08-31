@@ -12,6 +12,7 @@ for (let i = 0; i < GAME_THUMBS.length; i++) {
     const g = GAME_THUMBS[i];
     const thumbnail = g.querySelector('.thumbnail');
     thumbClicks[i] = false;
+    const link = g.querySelector('a');
 
     if (!onMobile) {
         g.addEventListener('mouseover', (event) => {
@@ -31,16 +32,18 @@ for (let i = 0; i < GAME_THUMBS.length; i++) {
             thumbnail.style.animationFillMode = null;
         });
     } else {
+
         g.addEventListener('touchstart', (event) => {
             if (!thumbClicks[i]) {
                 thumbClicks[i] = true;
-                
+
                 thumbnail.style.animationName = 'darken';
                 thumbnail.style.animationDuration = '0.25s';
                 thumbnail.style.animationFillMode = 'forward';
                 g.children['info'].style.color = 'white';
             } else {
-                
+                link.style.pointerEvents = 'auto';
+
             }
         });
         thumbnail.addEventListener('animationend', (event) => {
