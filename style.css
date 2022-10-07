@@ -41,7 +41,7 @@ h1 {
 }
 
 p {
-    font-family: "JetBrains Mono";
+    font-family: "JetBrains Mono", Fallback, sans-serif;
 }
 
 .section-marker {
