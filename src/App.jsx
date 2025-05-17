@@ -1,13 +1,38 @@
 import './style.css';
+import { useState } from 'react';
 
-function GameThumb({ title, link, imgSrc, info }) {
+function Thumbnail({ title, link, imgSrc, info }) {
+  const [hovered, setHovered] = useState(false);
+  const [animClass, setAnimClass] = useState('');
+
+  function handleMouseEnter() {
+    setHovered(true);
+    setAnimClass('darken');
+  }
+
+  function handleMouseLeave() {
+    setHovered(false);
+    setAnimClass('lighten');
+  }
+
   return (
     <div className="game">
       <a href={link} target="_blank" rel="noopener noreferrer">
-        <img src={imgSrc} className="thumbnail" alt="" />
+        <img src={imgSrc}
+          onMouseEnter={handleMouseEnter}
+          onMouseLeave={handleMouseLeave}
+          className={`thumbnail${animClass ? ' ' + animClass : ''}`}
+          alt=""
+          onAnimationEnd={() => {
+            if (animClass === 'lighten') {
+              setAnimClass('');
+            }
+          }}
+        />
         <p className="game-title">{title}</p>
       </a>
-      <p className="info">{info}</p>
+      <p className="info"
+        style={{ color: hovered ? 'white' : 'transparent' }}>{info}</p>
     </div>
   );
 }
@@ -17,7 +42,7 @@ function App() {
     <div>
       <h2 className="section-marker">Coded By Me</h2>
       <div className="container">
-        <GameThumb
+        <Thumbnail
           title="Sh*t Rainbows Piss Thunder"
           link="https://www.newgrounds.com/portal/view/848623"
           imgSrc="/img/game_thumbnails/SRPT.png"
