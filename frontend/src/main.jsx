@@ -7,3 +7,8 @@ createRoot(document.getElementById('root')).render(
     <App />
   </StrictMode>,
 )
+
+// connect to the backend and route to "/"
+// const res = await fetch('backend:5174/');
+// const data = await res.json();
+// console.log(data);

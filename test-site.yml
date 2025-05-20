@@ -1,0 +1,29 @@
+# Compose the website from the front and back ends, plus an npx static file server
+version: '3.8'
+
+services:
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "5173:5173"
+    environment:
+      - THUMBNAILS_URL=content 
+      - DATABASE_FILE=test.db
+
+  backend:
+    hostname: "backend"
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - "5174:5174"
+
+  static-server:
+    image: node:20
+    hostname: "content"
+    ports:
+      - "8080:8080"
+    # serve the game_thumbnails directory 
+    command: npx serve -l 8080 -s game_thumbnails

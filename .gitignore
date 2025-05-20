@@ -24,7 +24,7 @@ dist-ssr
 *.sw?
 
 # dependencies
-/node_modules
+/frontend/node_modules
 
 # production
 /dist
@@ -37,6 +37,19 @@ dist-ssr
 
 # Vite cache
 /.vite
+
+# Rust build
+/backend/target
+
+# Executables
+*.exe
+*.dll
+*.so
+*.dylib
+
+# Misc
+Cargo.lock
+.DS_Store
 
 # VS Code settings
 .vscode/

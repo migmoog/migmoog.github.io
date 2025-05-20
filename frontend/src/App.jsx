@@ -18,7 +18,7 @@ function Thumbnail({ title, link, imgSrc, info }) {
   return (
     <div className="game">
       <a href={link} target="_blank" rel="noopener noreferrer">
-        <img src={imgSrc}
+        <img src={process.env.THUMBNAILS_URL + imgSrc}
           onMouseEnter={handleMouseEnter}
           onMouseLeave={handleMouseLeave}
           className={`thumbnail${animClass ? ' ' + animClass : ''}`}
@@ -42,12 +42,12 @@ function App() {
     <div>
       <h2 className="section-marker">Coded By Me</h2>
       <div className="container">
-        <Thumbnail
+        {/* <Thumbnail
           title="Sh*t Rainbows Piss Thunder"
           link="https://www.newgrounds.com/portal/view/848623"
           imgSrc="/img/game_thumbnails/SRPT.png"
           info="Made for the Pride Month Game Jam, made with my friends in Team Max Hog."
-        />
+        /> */}
       </div>
       <h2 className="section-marker">Art Contributions</h2>
       <div className="container">

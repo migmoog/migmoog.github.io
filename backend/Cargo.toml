@@ -1,0 +1,11 @@
+[package]
+name = "backend"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+anyhow = "1.0.98"
+axum = "0.8.4"
+sqlx = { version = "0.8.5", features = ["sqlite"] }
+tokio = "1.45.0"
+url = "2.5.4"
