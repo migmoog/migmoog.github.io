@@ -1,4 +1,4 @@
-use axum::{response::Html, routing::get, Router};
+use axum::{ response::IntoResponse, routing::get, Router};
 use tokio::net::TcpListener;
 use url::Url;
 
@@ -14,12 +14,13 @@ struct Thumbnail {
 async fn main() -> anyhow::Result<()> {
     let router = Router::new().route("/", get(index));
 
-    let listener = TcpListener::bind("localhost:5174").await?;
+    let listener = TcpListener::bind("0.0.0.0:5174").await?;
 
     axum::serve(listener, router).await?;
     Ok(())
 }
 
-async fn index() {
+async fn index() -> impl IntoResponse {
     println!("Hello, world!");
+    "Hello World".into_response()
 }

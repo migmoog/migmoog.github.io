@@ -1,6 +1,4 @@
 # Compose the website from the front and back ends, plus an npx static file server
-version: '3.8'
-
 services:
   frontend:
     build:
@@ -9,11 +7,10 @@ services:
     ports:
       - "5173:5173"
     environment:
-      - THUMBNAILS_URL=content 
-      - DATABASE_FILE=test.db
+      - VITE_BACKEND_URL=http://backend:5174 
+      - DATABASE_FILE=/app/test.db
 
   backend:
-    hostname: "backend"
     build:
       context: ./backend
       dockerfile: Dockerfile
