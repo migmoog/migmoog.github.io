@@ -1,0 +1,30 @@
+# Compose the website from the front and back ends, plus an npx static file server
+services:
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "5173:5173"
+    environment:
+      - VITE_BACKEND_URL=http://localhost:5174 # can't actually use the name bc hostnames are docker endemic 
+      - VITE_THUMBNAILS_URL=http://localhost:8080
+
+  backend:
+    hostname: "backend"
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - "5174:5174"
+    environment:
+      - DATABASE_FILE=/app/test.db
+
+  static-server:
+    image: node:20
+    hostname: "content"
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./static:/static:ro
+    command: npx serve static -l 8080
