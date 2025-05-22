@@ -1,43 +1,25 @@
-FROM rust:1.83 AS builder
+FROM golang:1.22-alpine
 
-# Set the working directory inside the container
-WORKDIR /usr/src/app
-
-# Copy the Cargo.toml and Cargo.lock (if available)
-COPY Cargo.toml Cargo.lock ./
-
-# Create a dummy src/main.rs file for dependency caching
-RUN mkdir src && echo "fn main() {}" > src/main.rs
-
-# Pre-fetch dependencies to cache them
-RUN cargo update
-RUN cargo build --release && rm -rf target/release/build
-
-# Copy the actual source code
-COPY src/ src/
-
-# Build the actual application
-RUN cargo build --release
-
-# ---- Runtime Stage ----
-FROM ubuntu:22.04
-
-# Install only the required shared libraries
-RUN apt-get update && apt-get install -y \
-    libssl-dev \
-    sqlite3 \
-    && apt-get clean \
-    && rm -rf /var/lib/apt/lists/*
-
-
-# Set the working directory
 WORKDIR /app
-COPY init.sql .
-# RUN init.sql with sqlite3 to a test.db
-RUN sqlite3 test.db < init.sql
 
-# Copy the compiled binary from the builder stage
-COPY --from=builder /usr/src/app/target/release/backend .
+# Install SQLite driver for Go
+RUN apk add --no-cache gcc musl-dev sqlite
 
-# Run the application by default
-ENTRYPOINT ["./backend"]
+# Copy Go source code
+COPY main.go ./
+COPY init.sql ./
+
+# Install Go SQLite driver
+RUN go mod init backend && \
+    go get github.com/mattn/go-sqlite3
+
+# Build the Go backend
+RUN go build -o backend main.go
+
+# Set environment variable for database file location
+ENV DATABASE_URL=/app/test.db
+
+# On container start, initialize the database if it doesn't exist
+CMD ["/bin/sh", "-c", "if [ ! -f /app/test.db ]; then sqlite3 /app/test.db < /app/init.sql; fi && ./backend"]
+
+EXPOSE 5174
