@@ -46,6 +46,18 @@ function Thumbnail({ title, link, imgSrc, info }) {
   );
 }
 
+function thumbnailFromJson(json) {
+  return (
+    <Thumbnail
+      title={json.title}
+      link={json.link}
+      imgSrc={json.img_src}
+      info={json.info}
+      key={json.title}
+    />
+  );
+}
+
 function App() {
   const [projThumbnails, setProjThumbnails] = useState([]);
   // send a request for the /projects from the backend in an effect
@@ -59,22 +71,17 @@ function App() {
         console.error(err);
       });
   }, []);
+
+
   return (
     <div>
       <h2 className="section-marker">Coded By Me</h2>
       <div className="container">
-        {projThumbnails.map((proj) => (
-          <Thumbnail
-            title={proj.title}
-            link={proj.link}
-            imgSrc={proj.img_src}
-            info={proj.info}
-          />
-        ))}
+        {projThumbnails.filter(d => d.section == 0).map(thumbnailFromJson)}
       </div>
       <h2 className="section-marker">Art Contributions</h2>
       <div className="container">
-        {/* ...art contributions here... */}
+        {projThumbnails.filter(d => d.section == 1).map(thumbnailFromJson)}
       </div>
     </div>
   );
