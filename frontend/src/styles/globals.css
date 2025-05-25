@@ -8,6 +8,12 @@
     src: url("font/JetBrainsMono-Regular.otf") format("opentype");
 }
 
+html, body, #root {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
 body {
     background-color: #ffdfba;
 }
