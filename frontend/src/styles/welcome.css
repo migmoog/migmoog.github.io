@@ -1,0 +1,13 @@
+/* Align all contents in the center */
+.welcome-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+}
+
+.facepic > i > p {
+    margin-top: 0px;
+    font-size: 12px;
+}

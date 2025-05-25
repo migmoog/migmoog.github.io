@@ -1,0 +1,32 @@
+@font-face {
+    font-family: "Newgrounds";
+    src: url("font/NewgroundsFont-Regular.otf") format('opentype');
+}
+
+@font-face {
+    font-family: "JetBrains Mono";
+    src: url("font/JetBrainsMono-Regular.otf") format("opentype");
+}
+
+body {
+    background-color: #ffdfba;
+}
+
+h1 {
+    width: 60%;
+    height: auto;
+    margin-left: 2.5%;
+    margin-top: 5%;
+    position: absolute;
+    font-size: 100px;
+    font-family: 'Newgrounds', Fallback, sans-serif;
+    font-style: italic;
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    background-color: #333;
+    padding: 10px;
+}
