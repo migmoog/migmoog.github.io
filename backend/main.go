@@ -37,10 +37,11 @@ func indexHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 type Thumbnail struct {
-	Title  string `json:"title"`
-	Link   string `json:"link"`
-	ImgSrc string `json:"img_src"`
-	Info   string `json:"info"`
+	Title   string `json:"title"`
+	Link    string `json:"link"`
+	ImgSrc  string `json:"img_src"`
+	Info    string `json:"info"`
+	Section string `json:"section"`
 }
 
 // /projects handler
@@ -54,7 +55,7 @@ func projectsHandler(w http.ResponseWriter, r *http.Request) {
 	}
 	defer db.Close()
 	// get data from thumbnails table
-	rows, err := db.Query("SELECT title, link, img_source, info FROM thumbnails")
+	rows, err := db.Query("SELECT title, link, img_source, info, section FROM thumbnails ORDER BY section")
 	if err != nil {
 		fmt.Println("Error querying database:", err)
 		return
@@ -64,7 +65,7 @@ func projectsHandler(w http.ResponseWriter, r *http.Request) {
 	var thumbnails []Thumbnail
 	for rows.Next() {
 		var t Thumbnail
-		if err := rows.Scan(&t.Title, &t.Link, &t.ImgSrc, &t.Info); err != nil {
+		if err := rows.Scan(&t.Title, &t.Link, &t.ImgSrc, &t.Info, &t.Section); err != nil {
 			fmt.Println("Error scanning row:", err)
 			return
 		}

@@ -1,4 +1,4 @@
-import './style.css';
+import '../styles/projects.css';
 import { useState, useEffect } from 'react';
 
 function Thumbnail({ title, link, imgSrc, info }) {
@@ -46,38 +46,51 @@ function Thumbnail({ title, link, imgSrc, info }) {
   );
 }
 
-function App() {
+function thumbnailFromJson(json) {
+  return (
+    <Thumbnail
+      title={json.title}
+      link={json.link}
+      imgSrc={json.img_src}
+      info={json.info}
+      key={json.title}
+    />
+  );
+}
+
+function Projects() {
   const [projThumbnails, setProjThumbnails] = useState([]);
   // send a request for the /projects from the backend in an effect
   useEffect(() => {
-    fetch(import.meta.env.VITE_BACKEND_URL + '/projects')
-      .then((res) => res.json())
-      .then((data) => {
+    const fetchProjects = async () => {
+      try {
+        const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/projects`);
+        const data = await res.json();
         setProjThumbnails(data);
-      })
-      .catch((err) => {
+      } catch (err) {
         console.error(err);
-      });
+      }
+    };
+    fetchProjects();
   }, []);
+
+
+  const sections = [
+    { title: "Coded By Me", section: 0 },
+    { title: "Art Contributions", section: 1 }
+  ];
   return (
     <div>
-      <h2 className="section-marker">Coded By Me</h2>
-      <div className="container">
-        {projThumbnails.map((proj) => (
-          <Thumbnail
-            title={proj.title}
-            link={proj.link}
-            imgSrc={proj.img_src}
-            info={proj.info}
-          />
-        ))}
-      </div>
-      <h2 className="section-marker">Art Contributions</h2>
-      <div className="container">
-        {/* ...art contributions here... */}
-      </div>
+      {sections.map(({ title, section }) => (
+        <div key={section}>
+          <h2 className="section-marker">{title}</h2>
+          <div className="container">
+            {projThumbnails.filter(d => d.section === section).map(thumbnailFromJson)}
+          </div>
+        </div>
+      ))}
     </div>
   );
 }
 
-export default App;
+export default Projects;

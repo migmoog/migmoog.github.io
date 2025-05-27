@@ -1,13 +1,14 @@
 -- initialize table
-CREATE TABLE IF NOT EXISTS 'thumbnails' (
-    'title' TEXT NOT NULL,
-    'link' TEXT NOT NULL,
-    'img_source' TEXT NOT NULL,
-    'info' TEXT
+CREATE TABLE thumbnails (
+    title TEXT NOT NULL,
+    link TEXT NOT NULL,
+    img_source TEXT NOT NULL,
+    info TEXT NOT NULL,
+    section INTEGER NOT NULL DEFAULT 0
 );
 
 -- all the examples
-INSERT INTO 'thumbnails' ('title', 'link', 'img_source', 'info') VALUES
+INSERT INTO thumbnails (title, link, img_source, info) VALUES
 ('Sh*t Rainbows Piss Thunder', 'https://www.newgrounds.com/portal/view/848623', '/game_thumbnails/SRPT.png', 'Made for the Pride Month Game Jam, with my friends in Team Max Hog.'),
 ('Zoo Game', 'https://www.newgrounds.com/portal/view/832888', '/game_thumbnails/zoo_game.png', 'Made over the course of a year for fun. It was the first project I released with my team as "Team Max Hog" with my friend Ryan.'),
 ('Profile Picture Party', 'https://www.newgrounds.com/portal/view/846327', '/game_thumbnails/pfp_party.png', 'A game I made for Newgrounds holiday "Pico Day." It was a formative experience where I learned to work with another programmer and asset creators besides artists.'),
@@ -19,3 +20,8 @@ INSERT INTO 'thumbnails' ('title', 'link', 'img_source', 'info') VALUES
 ('Into The Web Of Swine', 'https://www.newgrounds.com/portal/view/853764', '/game_thumbnails/swine.png', 'Made for the Newgrounds Mobile Game Jam 2022. Made in a week and a half.'),
 ('Clock Baby Paint Adventure', 'https://www.newgrounds.com/portal/view/853963', '/game_thumbnails/clock_baby.png', 'Made in a single night for the Newgrounds holiday "Clock Day" in 2022.'),
 ('People Party', 'https://www.newgrounds.com/portal/view/855389', '/game_thumbnails/people_party.png', 'Match-3 game made over the course of a week for a client.');
+
+-- game art contributions
+INSERT INTO thumbnails (title, link, img_source, info, section) VALUES
+('Sludge And Sorcery', 'https://www.newgrounds.com/portal/view/765632', '/game_thumbnails/s_and_s.png', 'Made for GBJAM 2021, I did the tilework.', 1),
+('The Markus Polo Hostage Situation', 'https://www.newgrounds.com/portal/view/817234', '/game_thumbnails/markus_polo.png', 'Made for the Ludum Dare game jam, helped with the writing and made every art asset.', 1);
