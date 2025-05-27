@@ -8,7 +8,9 @@
     src: url("font/JetBrainsMono-Regular.otf") format("opentype");
 }
 
-html, body, #root {
+html,
+body,
+#root {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -29,10 +31,74 @@ h1 {
     font-style: italic;
 }
 
+.footer-logos {
+    /* center the contents */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.footer-logo {
+    /* tint the images black */
+    filter: grayscale(100%) brightness(0) invert(1);
+
+}
+
+footer>p {
+    display: flex;
+    justify-content: center;
+}
+
 .navbar {
     display: flex;
-    justify-content: space-around;
-    align-items: center;
-    background-color: #333;
+    background-color: #571d02;
     padding: 10px;
+    font-family: 'JetBrains Mono', Fallback, sans-serif;
+    gap: 16px;
+    /* Adds space between navbar items */
+}
+
+.navbar-link {
+    color: white;
+    text-decoration: none;
+    margin: 0;
+    /* Remove margin, use gap instead */
+    font-size: 18px;
+}
+
+.navbar-item {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-style: dashed;
+    max-width: 100%;
+    max-height: 100%;
+    flex: 1 1 0;
+    /* Allow items to grow and fill space equally */
+    min-width: 0;
+    /* Prevent overflow */
+    padding: 0 8px;
+    /* Optional: add inner padding */
+    border: 2px;
+    border-style: dashed;
+    border-color: #fff;
+    transition: border-color 0.3s;
+}
+
+@keyframes grow {
+    0% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.05);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+.navbar-item:hover {
+    animation: grow jiggle 0.5s ease-in-out forwards;
 }

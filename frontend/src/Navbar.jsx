@@ -2,11 +2,13 @@ import { Link } from "react-router-dom";
 
 function NavbarItem({ text, route }) {
     return (
-        <Link to={route} className="navbar-link">
-            <div className="navbar-item">
-                {text}
-            </div>
-        </Link>
+        <div className="navbar-item">
+            <Link to={route} className="navbar-link">
+                <p className="navbar-text">
+                    {text}
+                </p>
+            </Link>
+        </div>
     );
 }
 export default function Navbar() {
