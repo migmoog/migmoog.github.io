@@ -13,9 +13,7 @@ function Welcome() {
                 <i><p style={{ textAlign: "center" }}>
                     I solemnly swear I had nothing to do with the destruction in the background.
                 </p></i>
-            </div>
-
-        
+            </div> 
         </div>
     );
 }

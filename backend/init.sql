@@ -7,6 +7,12 @@ CREATE TABLE thumbnails (
     section INTEGER NOT NULL DEFAULT 0
 );
 
+-- quotes that amuse me
+CREATE TABLE quotes (
+    quote TEXT NOT NULL,
+    author TEXT NOT NULL
+); -- big fat TODO over here
+
 -- all the examples
 INSERT INTO thumbnails (title, link, img_source, info) VALUES
 ('Sh*t Rainbows Piss Thunder', 'https://www.newgrounds.com/portal/view/848623', '/game_thumbnails/SRPT.png', 'Made for the Pride Month Game Jam, with my friends in Team Max Hog.'),
