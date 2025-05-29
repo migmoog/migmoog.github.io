@@ -22,11 +22,11 @@ function Footer() {
       <div className="footer-logos">
         <FooterLogo
           link="https://github.com/migmoog"
-          imgSrc="/img/ghlogo.png"
+          imgSrc="img/ghlogo.png"
         />
         <FooterLogo
           link="https://www.linkedin.com/in/jlgdev/"
-          imgSrc="/img/linlogo.png"
+          imgSrc="img/linlogo.png"
         />
       </div>
       <p>&copy; {new Date().getFullYear()} Jeremy Gordon</p>
