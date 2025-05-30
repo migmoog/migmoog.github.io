@@ -7,7 +7,7 @@ function Welcome() {
         <div className='welcome-container'>
             <div className="facepic" style={{ width: `${imageScale}vw`, height: `${imageScale}vw`, position: "relative" }}>
                 <img
-                    src="img/facepic.jpg"
+                    src="/img/facepic.jpg"
                     style={{ width: "100%", height: "100%", objectFit: "cover" }}
                 />
                 <i><p style={{ textAlign: "center" }}>

@@ -5,7 +5,7 @@ function About() {
     <div>
       <div className='about-header'>
         <h1>Jeremy Gordon is a</h1>
-        <img src="img/welcome.png" id="welcome-face" />
+        <img src="/img/welcome.png" id="welcome-face" />
       </div>
       <div className="description">
         <p> Software developer with a knack for learning.
