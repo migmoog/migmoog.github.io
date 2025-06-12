@@ -74,18 +74,27 @@ function Projects() {
     fetchProjects();
   }, []);
 
-
   const sections = [
     { title: "Coded By Me", section: 0 },
     { title: "Art Contributions", section: 1 }
   ];
+
+  console.log(projThumbnails);
   return (
     <div>
       {sections.map(({ title, section }) => (
         <div key={section}>
           <h2 className="section-marker">{title}</h2>
           <div className="container">
-            {projThumbnails.filter(d => d.section === section).map(thumbnailFromJson)}
+            {projThumbnails.filter(d =>{ 
+              let isSectPiece = parseInt(d.section) === section
+              if (!isSectPiece) {
+                // print the data types
+                console.log(`Filtering out ${d.title} from section ${section}`);
+                console.log(`Section: ${d.section}, Title: ${d.title}, Type: ${typeof d.section}`);
+              }
+              return isSectPiece;
+            }).map(thumbnailFromJson)}
           </div>
         </div>
       ))}

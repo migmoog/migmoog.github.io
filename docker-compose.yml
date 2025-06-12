@@ -18,6 +18,8 @@ services:
     ports:
       - "5174:5174"
     environment:
+      - DB_DRIVER_TYPE=sqlite3
+      - PORT=5174
       - DATABASE_FILE=/app/test.db
 
   static-server:

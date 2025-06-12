@@ -8,6 +8,7 @@ import (
 	"net/http"
 	"os"
 
+	_ "github.com/lib/pq"
 	_ "github.com/mattn/go-sqlite3"
 )
 
@@ -28,7 +29,12 @@ func main() {
 	http.Handle("/", withCORS(http.HandlerFunc(indexHandler)))
 	http.Handle("/projects", withCORS(http.HandlerFunc(projectsHandler)))
 
-	log.Fatal(http.ListenAndServe(":5174", nil))
+	fmt.Println("Activating")
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = "8080"
+	}
+	log.Fatal(http.ListenAndServe(":"+port, nil))
 }
 
 // print a hello world at the index
@@ -48,8 +54,9 @@ type Thumbnail struct {
 func projectsHandler(w http.ResponseWriter, r *http.Request) {
 	// open database from DATABASE_URL environment variable
 	//
-	db, err := sql.Open("sqlite3", os.Getenv("DATABASE_URL"))
+	db, err := sql.Open(os.Getenv("DB_DRIVER_TYPE"), os.Getenv("DATABASE_URL"))
 	if err != nil {
+		http.Error(w, "Error opening database", http.StatusInternalServerError)
 		fmt.Println("Error opening database:", err)
 		return
 	}
@@ -57,6 +64,7 @@ func projectsHandler(w http.ResponseWriter, r *http.Request) {
 	// get data from thumbnails table
 	rows, err := db.Query("SELECT title, link, img_source, info, section FROM thumbnails ORDER BY section")
 	if err != nil {
+		http.Error(w, "Error querying database", http.StatusInternalServerError)
 		fmt.Println("Error querying database:", err)
 		return
 	}
@@ -66,6 +74,7 @@ func projectsHandler(w http.ResponseWriter, r *http.Request) {
 	for rows.Next() {
 		var t Thumbnail
 		if err := rows.Scan(&t.Title, &t.Link, &t.ImgSrc, &t.Info, &t.Section); err != nil {
+			http.Error(w, "Error scanning row", http.StatusInternalServerError)
 			fmt.Println("Error scanning row:", err)
 			return
 		}
@@ -74,6 +83,7 @@ func projectsHandler(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusOK)
 	if err := json.NewEncoder(w).Encode(thumbnails); err != nil {
+		http.Error(w, "Error encoding JSON", http.StatusInternalServerError)
 		fmt.Println("Error encoding JSON:", err)
 	}
 }

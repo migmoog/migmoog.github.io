@@ -11,7 +11,8 @@ COPY init.sql ./
 
 # Install Go SQLite driver
 RUN go mod init backend && \
-    go get github.com/mattn/go-sqlite3
+    go get github.com/mattn/go-sqlite3 && \
+    go get github.com/lib/pq
 
 # Build the Go backend
 RUN go build -o backend main.go
