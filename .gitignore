@@ -53,3 +53,8 @@ Cargo.lock
 
 # VS Code settings
 .vscode/
+
+
+__pycache__/
+.venv/
+backend/db.sqlite3

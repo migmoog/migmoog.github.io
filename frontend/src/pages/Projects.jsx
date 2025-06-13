@@ -79,14 +79,16 @@ function Projects() {
     { title: "Art Contributions", section: 1 }
   ];
 
-  console.log(projThumbnails);
+  if (import.meta.env.MODE == "dev") { 
+    console.log(projThumbnails); 
+  }
   return (
     <div>
       {sections.map(({ title, section }) => (
         <div key={section}>
           <h2 className="section-marker">{title}</h2>
           <div className="container">
-            {projThumbnails.filter(d =>{ 
+            {projThumbnails.filter(d => {
               let isSectPiece = parseInt(d.section) === section
               if (!isSectPiece) {
                 // print the data types
