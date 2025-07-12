@@ -79,7 +79,8 @@ function Projects() {
     { title: "Art Contributions", section: 1 }
   ];
 
-  if (import.meta.env.MODE == "dev") { 
+  const inDevMode = import.meta.env.MODE == "dev"
+  if (inDevMode) { 
     console.log(projThumbnails); 
   }
   return (
@@ -90,7 +91,7 @@ function Projects() {
           <div className="container">
             {projThumbnails.filter(d => {
               let isSectPiece = parseInt(d.section) === section
-              if (!isSectPiece) {
+              if (inDevMode && !isSectPiece) {
                 // print the data types
                 console.log(`Filtering out ${d.title} from section ${section}`);
                 console.log(`Section: ${d.section}, Title: ${d.title}, Type: ${typeof d.section}`);

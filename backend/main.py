@@ -29,7 +29,7 @@ async def get_projects() -> JSONResponse:
         row = {
             "title": row[0],
             "link": row[1],
-            "img_source": row[2],
+            "img_src": row[2],
             "info": row[3],
             "section": row[4],
         }
@@ -54,4 +54,4 @@ if __name__ == "__main__":
     import sys
     if "uvicorn" not in sys.modules:
         import uvicorn
-    uvicorn.run("main:app", port=os.getenv("PORT", 5174))
+    uvicorn.run("main:app", host="0.0.0.0", port=os.getenv("PORT", 5174))

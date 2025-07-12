@@ -1,14 +1,12 @@
 # Compose the website from the front and back ends, plus an npx static file server
 services:
+  # NOTE: set your vite variables in a .env
   frontend:
     build:
       context: ./frontend
       dockerfile: Dockerfile
     ports:
       - "5173:5173"
-    environment:
-      - VITE_BACKEND_URL=http://localhost:5174 # can't actually use the name bc hostnames are docker endemic 
-      - VITE_THUMBNAILS_URL=http://localhost:8080
 
   backend:
     hostname: "backend"
@@ -23,7 +21,7 @@ services:
       - DATABASE_FILE=/app/test.db
 
   static-server:
-    image: node:20
+    image: node:20-alpine
     hostname: "content"
     ports:
       - "8080:8080"
