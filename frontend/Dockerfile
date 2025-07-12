@@ -1,15 +1,21 @@
-FROM node:20 
+FROM node:20-alpine AS builder
 WORKDIR /app
 
 # copy everything required excluding node_modules
 COPY package.json package-lock.json ./
 COPY vite.config.js ./
 COPY src ./src
+COPY .env ./
 COPY public ./public
 COPY index.html ./
 
-RUN npm install
-ENTRYPOINT ["npm", "run", "dev", "--", "--host", "0.0.0.0"]
+RUN npm ci
+RUN npm run build
 
-# Expose the port the app runs on for browser fun!
+# Serve stage
+FROM node:20-alpine AS runner
+WORKDIR /app
+COPY --from=builder /app/dist ./
+RUN npm install -g serve
+CMD ["serve", "-s", ".", "-l", "5173"]
 EXPOSE 5173

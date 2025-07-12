@@ -79,16 +79,19 @@ function Projects() {
     { title: "Art Contributions", section: 1 }
   ];
 
-  console.log(projThumbnails);
+  const inDevMode = import.meta.env.MODE == "dev"
+  if (inDevMode) { 
+    console.log(projThumbnails); 
+  }
   return (
     <div>
       {sections.map(({ title, section }) => (
         <div key={section}>
           <h2 className="section-marker">{title}</h2>
           <div className="container">
-            {projThumbnails.filter(d =>{ 
+            {projThumbnails.filter(d => {
               let isSectPiece = parseInt(d.section) === section
-              if (!isSectPiece) {
+              if (inDevMode && !isSectPiece) {
                 // print the data types
                 console.log(`Filtering out ${d.title} from section ${section}`);
                 console.log(`Section: ${d.section}, Title: ${d.title}, Type: ${typeof d.section}`);
