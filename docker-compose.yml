@@ -8,17 +8,44 @@ services:
     ports:
       - "5173:5173"
 
+  db:
+    image: postgres:latest
+    restart: always
+    ports:
+      - 6969:5432
+    environment:
+      - POSTGRES_DB=portfolio
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=cool
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8081:8080
+
   backend:
-    hostname: "backend"
-    build:
+    build: 
       context: ./backend
       dockerfile: Dockerfile
     ports:
-      - "5174:5174"
+      - 5174:5174
+      - 5678:5678 # Debug port
     environment:
-      - DB_DRIVER_TYPE=sqlite3
+      - DATABASE_URL=postgresql://postgres:cool@db:5432/portfolio
       - PORT=5174
-      - DATABASE_FILE=/app/test.db
+      - ADMIN_KEY=hi
+      - ADMIN_ORIGIN=http://localhost:5175
+    depends_on:
+      db:
+        condition: service_healthy
 
   static-server:
     image: node:20-alpine
@@ -28,3 +55,6 @@ services:
     volumes:
       - ./static:/static:ro
     command: npx serve static -l 8080
+
+volumes:
+  postgres_data:

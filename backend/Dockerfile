@@ -1,9 +1,13 @@
 FROM python:3.13-alpine
-WORKDIR /app
-COPY requirements.txt ./
+
+WORKDIR /code
+COPY requirements.txt .
+COPY .env .
 RUN pip install -r requirements.txt
-RUN apk add --no-cache sqlite
+
+ENV PORT=5174
+
+EXPOSE ${PORT}
+EXPOSE 5678
 COPY . .
-RUN sqlite3 db.sqlite3 < init.sql
-CMD ["python", "main.py"]
-EXPOSE 5174
+CMD uvicorn main:app --host 0.0.0.0 --port $PORT

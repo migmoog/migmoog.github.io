@@ -1,2 +1,8 @@
 fastapi
+slowapi
 uvicorn
+sqlmodel
+psycopg2-binary
+python-dotenv
+cloudinary
+debugpy
