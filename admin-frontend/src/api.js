@@ -21,7 +21,14 @@ export function useThumbnail(thumbnailId = -1) {
             })
     }, [id]);
 
-    return [id, setId, thumbnailData, setThumbnailData];
+    return {
+        id: id,
+        set: setId,
+        data: thumbnailData,
+        setDataField: function(fieldName, value) {
+           this.data[fieldName] = value;
+        }
+    };
 }
 
 export function useAllThumbnails() {
@@ -39,28 +46,6 @@ export function useAllThumbnails() {
     }, []);
 
     return thumbnailData;
-}
-
-export async function submitForm(method, data, id = -1) {
-    try {
-        const endpoint = URL + "/admin/thumbnails" + (id > 0 ? `/${id}` : "");
-        const response = await fetch(endpoint, {
-            method: method,
-            headers: {
-                'Content-Type': 'application/json',
-                'X-API-Key': import.meta.env.VITE_ADMIN_API_KEY
-            },
-            body: JSON.stringify(data)
-        });
-
-        if (!response.ok) throw new Error(`Status ${response.status}`);
-
-        const result = await response.json();
-        return result;
-    } catch (error) {
-        console.error(error);
-        return null;
-    }
 }
 
 async function getThumbnailData(thumbnailId) {

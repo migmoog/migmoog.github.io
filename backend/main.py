@@ -2,24 +2,30 @@ from contextlib import asynccontextmanager
 import os
 import secrets
 
-from fastapi import FastAPI, HTTPException, Depends, Header, Request
+from fastapi import FastAPI, HTTPException, Depends, Header, Request, Form, UploadFile, File
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 from slowapi import Limiter, _rate_limit_exceeded_handler
 from slowapi.util import get_remote_address
 from slowapi.errors import RateLimitExceeded
 
-from typing import List, Annotated
+from typing import List, Annotated, Optional
 
 from sqlmodel import Session, select
 from dotenv import load_dotenv
-load_dotenv()
+
+if os.getenv("ENV") == "dev":
+    load_dotenv('.env.local')
+else:
+    load_dotenv()
+
 import cloudinary
+from cloudinary import CloudinaryImage
 import cloudinary.uploader
 import cloudinary.api
 
 from models import Thumbnail
-from db import create_db_and_tables, create_base_projects, engine
+from db import create_db_and_tables, engine
 
 limiter = Limiter(key_func=get_remote_address)
 origins = [
@@ -29,7 +35,7 @@ origins = [
     os.getenv("ADMIN_ORIGIN")
 ]
 
-ADMIN_API_KEY = os.getenv("ADMIN_KEY")
+ADMIN_API_KEY = os.getenv("ADMIN_API_KEY")
 if not ADMIN_API_KEY:
     print("WARNING: No ADMIN_API_KEY is set. This means you can't use admin features")
 def verify_admin_key(x_api_key: Annotated[str, Header()]) -> bool:
@@ -39,6 +45,16 @@ def verify_admin_key(x_api_key: Annotated[str, Header()]) -> bool:
     if not x_api_key or not secrets.compare_digest(x_api_key, ADMIN_API_KEY):
         raise HTTPException(status_code=401, detail="Invalid API key")
     return True
+
+def find_thumbnail(thumbnail_id: int) -> Thumbnail:
+    with Session(engine) as session:
+        thumbnail = session.get(Thumbnail, thumbnail_id)
+        if not thumbnail:
+            raise HTTPException(
+                status_code=404,
+                detail=f"Thumbnail with ID {thumbnail_id} not found."
+            )
+        return thumbnail
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
@@ -69,61 +85,86 @@ async def get_projects() -> JSONResponse:
         return project_thumbnails
 
 @app.get("/projects/{thumbnail_id}", response_model=Thumbnail)
-async def get_one_project(thumbnail_id: int) -> JSONResponse:
-    with Session(engine) as session:
-        thumbnail = session.get(Thumbnail, thumbnail_id)
-        return thumbnail
+async def get_one_project(thumbnail: Annotated[Thumbnail, Depends(find_thumbnail)]) -> JSONResponse:
+    return thumbnail
+
+def upload_to_cdn(file: bytes) -> CloudinaryImage:
+    return cloudinary.uploader.upload_image(file, asset_folder='game_thumbnails')
 
 @app.post("/admin/thumbnails", response_model=Thumbnail)
 @limiter.limit("5/minute")
 async def upload_thumbnail(
     request: Request,
-    thumbnail: Thumbnail,
+    title: Annotated[str, Form()],
+    link: Annotated[str, Form()],
+    info: Annotated[str, Form()],
+    thumb_image: Annotated[UploadFile, File()],
+    section: Annotated[int, Form()],
     _: bool = Depends(verify_admin_key)
 ):
-    with Session(engine) as session:
-        thumbnail.id = None
-        session.add(thumbnail)
-        session.commit()
-        session.refresh(thumbnail)
-        return thumbnail
+    try:
+        contents = await thumb_image.read()
+        img_upload_result = upload_to_cdn(contents)
+        img_src = img_upload_result.url
+
+        with Session(engine) as session:
+            new_thumbnail = Thumbnail(
+                id=None,
+                title=title,
+                link=link,
+                info=info,
+                img_src=img_src,
+                section=section,
+                public_id=img_upload_result.public_id
+            )
+            session.add(new_thumbnail)
+            session.commit()
+            return new_thumbnail
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Couldn't upload image file: {e}")
 
 @app.put("/admin/thumbnails/{thumbnail_id}", response_model=Thumbnail)
 @limiter.limit("10/minute")
 async def update_thumbnail(
     request: Request,
-    thumbnail_id: int,
-    thumbnail_data: Thumbnail,
+    thumbnail: Annotated[Thumbnail, Depends(find_thumbnail)],
+    # id: Annotated[int, Form()],
+    title: Annotated[str, Form()],
+    link: Annotated[str, Form()],
+    info: Annotated[str, Form()],
+    thumb_image: Annotated[Optional[UploadFile], File()],
+    section: Annotated[int, Form()],
     _: bool = Depends(verify_admin_key)
 ):
+    if thumb_image:
+        try:
+            contents = await thumb_image.read()
+            upload_result = upload_to_cdn(contents)
+            thumbnail.public_id = upload_result.public_id
+            thumbnail.img_src = upload_result.url
+        except Exception as e:
+            raise HTTPException(status_code=500, detail=f"Couldn't update image file: {e}")
+    
+    thumbnail.title = title
+    thumbnail.link = link
+    thumbnail.info = info
+    thumbnail.section = section
+
     with Session(engine) as session:
-        # TODO
-        thumbnail: Thumbnail  = session.get(Thumbnail, thumbnail_id)
-        if not thumbnail:
-            raise HTTPException(status_code=404, detail=f'Thumbnail({thumbnail_id}) not found')
-        
-        thumbnail.title = thumbnail_data.title
-        thumbnail.link=  thumbnail_data.link
-        thumbnail.info = thumbnail_data.info
-        thumbnail.section = thumbnail_data.section
-        if thumbnail_data.img_src:
-            thumbnail.img_src = thumbnail_data.img_src
         session.add(thumbnail)
         session.commit()
-        session.refresh(thumbnail)
         return thumbnail
 
-@app.delete("/admin/thumbnails/{thumbnail_id}")
+
+@app.delete("/admin/thumbnails/{thumbnail_id}", response_description="Thumbnail was deleted.")
 @limiter.limit("5/minute")
 async def delete_thumbnail(
     request: Request,
-    thumbnail_id: int,
+    thumbnail: Annotated[Thumbnail, Depends(find_thumbnail)],
     _: bool = Depends(verify_admin_key)
 ):
+    cloudinary.uploader.destroy(thumbnail.public_id)
     with Session(engine) as session:
-        thumbnail = session.get(Thumbnail, thumbnail_id)
-        if not thumbnail:
-            raise HTTPException(status_code=404, detail=f"There is no thumbnail with the id {thumbnail_id}")
         session.delete(thumbnail)
         session.commit()
         return {"message": "Thumbnail deleted"}

@@ -2,8 +2,7 @@ import "./index.css"
 import "./forms.css"
 
 import { useState } from 'react'
-import NewThumbnail from './forms/NewThumbnail';
-import EditThumbnail from './forms/EditThumbnail';
+import {EditThumbnail, NewThumbnail} from './forms/ThumbnailPanel';
 import DeleteThumbnail from './forms/DeleteThumbnail';
 import ViewThumbnails from './forms/ViewThumbnails';
 
@@ -15,7 +14,7 @@ const ACTIONS_TO_THUMBS = {
 }
 
 function App() {
-  const [actionForm, setActionForm] = useState(<NewThumbnail/>);
+  const [actionForm, setActionForm] = useState(<NewThumbnail />);
   const handleChange = (event) => {
     switch (event.target.value) {
       case "POST":

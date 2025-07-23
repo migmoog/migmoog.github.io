@@ -9,3 +9,4 @@ class Thumbnail(SQLModel, table=True):
     img_src: str
     info: str
     section: int = Field(default=0)
+    public_id: Optional[str] = Field(default=None) # from the CDN
