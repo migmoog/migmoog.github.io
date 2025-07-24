@@ -58,17 +58,27 @@ function thumbnailFromJson(json) {
   );
 }
 
+const URL = import.meta.env.VITE_BACKEND_URL;
+
 function Projects() {
   const [projThumbnails, setProjThumbnails] = useState([]);
   // send a request for the /projects from the backend in an effect
   useEffect(() => {
+    console.assert(URL, "VITE_BACKEND_URL is not set");
     const fetchProjects = async () => {
       try {
-        const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/projects`);
+        const res = await fetch(`${URL}/projects`);
+        if (!res.ok)  {
+          console.error("Failed fetch, ", res.status, " reason is ", res.statusText);
+          throw new Error("FAILED!");
+        }
         const data = await res.json();
         setProjThumbnails(data);
+        console.assert(projThumbnails.length > 0, "Successfull request but no thumbnails received");
       } catch (err) {
-        console.error(err);
+        console.error("Couldn't get projects:", err,
+          ". Request was to", URL
+        );
       }
     };
     fetchProjects();

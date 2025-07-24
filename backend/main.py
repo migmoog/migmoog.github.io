@@ -14,10 +14,13 @@ from typing import List, Annotated, Optional
 from sqlmodel import Session, select
 from dotenv import load_dotenv
 
-if os.getenv("ENV") == "dev":
+ENV_TYPE = os.getenv("ENV")
+if ENV_TYPE == "dev":
     load_dotenv('.env.local')
-else:
+elif os.path.exists(".env"):
     load_dotenv()
+else:
+    print(f"Trying some environment junk: {os.getenv("ADMIN_ORIGIN")}")
 
 import cloudinary
 from cloudinary import CloudinaryImage
