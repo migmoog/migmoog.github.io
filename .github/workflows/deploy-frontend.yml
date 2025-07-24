@@ -39,7 +39,7 @@ jobs:
       - name: Build
         run: npm run build
         env:
-          VITE_BACKEND_URL: ${{ variables.VITE_BACKEND_URL }}
+          VITE_BACKEND_URL: ${{ vars.VITE_BACKEND_URL }}
         working-directory: frontend
       - name: Setup Pages
         uses: actions/configure-pages@v5
