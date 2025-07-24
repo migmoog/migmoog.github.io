@@ -15,7 +15,7 @@ function Thumbnail({ title, link, imgSrc, info }) {
     setAnimClass('lighten');
   }
 
-  const imageURL = `${import.meta.env.VITE_THUMBNAILS_URL}${imgSrc}`;
+  const imageURL = `${imgSrc}`;
   return (
     <div className="game">
       <a href={link} target="_blank" rel="noopener noreferrer">
