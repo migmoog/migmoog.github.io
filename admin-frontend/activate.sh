@@ -7,6 +7,8 @@ cd admin-frontend
 npm run dev &
 ADMIN_PID=$!
 
+LOCAL_IP=$(hostname -I | awk '{print $1}')
+
 # Wait for Vite to start
 sleep 3
 
@@ -26,11 +28,10 @@ google-chrome \
     --disable-renderer-backgrounding \
     --disable-backgrounding-occluded-windows \
     --disable-ipc-flooding-protection \
-    --app=http://192.168.1.31:5175 &
+    --app=http://$LOCAL_IP:5175 &
 CHROME_PID=$!
 
-echo "✅ Admin panel running at: http://192.168.1.31:5175"
-echo "✅ Chrome launched with CORS disabled"
+echo "Admin panel running on $LOCAL_IP"
 echo "Press Ctrl+C to stop everything"
 
 cleanup() {

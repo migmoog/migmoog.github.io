@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import { HashRouter, Route, Routes } from 'react-router-dom'
 import { createRoot } from 'react-dom/client'
 import Projects from './pages/Projects.jsx'
 import About from './pages/About.jsx';
@@ -36,7 +36,7 @@ function Footer() {
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <BrowserRouter>
+    <HashRouter>
       <Navbar />
       <Routes>
         <Route path="/" element={<Welcome />} />
@@ -44,6 +44,6 @@ createRoot(document.getElementById('root')).render(
         <Route path="/about" element={<About />} />
       </Routes>
       <Footer />
-    </BrowserRouter>
+    </HashRouter>
   </StrictMode>
 );
