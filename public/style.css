@@ -10,6 +10,7 @@
 
 body {
     background-color: #ffdfba;
+    margin: 0px;
 }
 
 h1 {
@@ -93,4 +94,25 @@ p {
 
 .game-title {
     margin-top: 5px;
+}
+
+#navbar {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    width: 100%;
+}
+
+.navbar-item {
+    width: 100%;
+    background-color: blue;
+    display: flex;
+    justify-content: center;
+    padding-top: 10px;
+    padding-bottom: 14px;
+    box-shadow: green 0px 15px 0px 0px 
+}
+
+.content {
+    padding: 15px;
 }
