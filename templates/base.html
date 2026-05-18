@@ -1,0 +1,27 @@
+{% macro navbar_item(icon_path) %}
+        <div class="navbar-item">
+                <img src={{ get_url(path=icon_path) }}>
+        </div>
+{% endmacro navbar_item %}
+
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+        <meta charset="utf-8">
+        <title>Jeremy Gordon</title>
+        <link href={{ get_url(path="./style.css") }}>
+</head>
+
+<body>
+        <div id="navbar">
+                {{  self::navbar_item(icon_path="images/home.png")  }}
+                {{  self::navbar_item(icon_path="images/code.png")  }}
+                {{  self::navbar_item(icon_path="images/art.png")  }}
+        </div>
+        
+        {% block content %} {% endblock content %}
+</body>
+
+</html>
