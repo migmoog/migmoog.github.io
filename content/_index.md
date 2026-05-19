@@ -1,6 +1,6 @@
 +++
 title = "COOL!"
-template = "index.html"
+template = "section.html"
 +++
 
 ## This is Jeremy's site

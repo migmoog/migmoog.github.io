@@ -113,6 +113,10 @@ p {
     box-shadow: green 0px 15px 0px 0px 
 }
 
+.navbar-item:hover {
+    background-color: red;
+}
+
 .content {
     padding: 15px;
 }

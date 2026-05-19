@@ -1,5 +1,6 @@
-{% macro navbar_item(icon_path) %}
-        <div class="navbar-item">
+{% macro navbar_item(icon_path, page) %}
+        <div class="navbar-item"
+             onclick="window.location.assign('{{ page }}')">
                 <img src={{ get_url(path=icon_path) }}>
         </div>
 {% endmacro navbar_item %}
@@ -16,9 +17,9 @@
 
 <body>
         <div id="navbar">
-                {{  self::navbar_item(icon_path="images/home.png")  }}
-                {{  self::navbar_item(icon_path="images/code.png")  }}
-                {{  self::navbar_item(icon_path="images/art.png")  }}
+                {{  self::navbar_item(icon_path="images/home.png", page="/")  }}
+                {{  self::navbar_item(icon_path="images/code.png", page="/code")  }}
+                {{  self::navbar_item(icon_path="images/art.png", page="/art")  }}
         </div>
         
         <div class="content">{% block content %} {% endblock content %}</div>
