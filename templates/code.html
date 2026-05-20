@@ -1,0 +1,16 @@
+{% extends "section.html" %}
+
+{% import "thumbnails.html" as thumb_macros %}
+
+{% block content %}
+{{ super() }}
+
+<div class="container">
+        {% for page in paginator.pages %}
+                 {% if page.extra.thumbnail is defined %}
+                        {{ thumb_macros::thumbnail(page=page) }}
+                 {% endif %}
+        {% endfor %}
+</div>
+
+{% endblock content %}

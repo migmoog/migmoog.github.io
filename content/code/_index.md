@@ -1,6 +1,8 @@
 +++
 title = "Code Projects"
-template = "section.html"
+template = "code.html"
+paginate_by = 100
+sort_by = "date"
 +++
 
-## This is my code projects
+I've been writing code since 2020. I've made games, webapps, and other types of software. 

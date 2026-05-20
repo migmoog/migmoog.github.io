@@ -4,8 +4,8 @@
 }
 
 @font-face {
-    font-family: "JetBrains Mono";
-    src: url("../font/JetBrainsMono-Regular.ttf") format("tff");
+    font-family: "Lato";
+    src: url("font/Lato-Regular.ttf")
 }
 
 body {
@@ -14,23 +14,9 @@ body {
 }
 
 h1 {
-    width: 60%;
-    height: auto;
-    margin-left: 2.5%;
-    margin-top: 5%;
-    position: absolute;
-    font-size: 100px;
+    font-size: 48px;
     font-family: 'Newgrounds', Fallback, sans-serif;
     font-style: italic;
-}
-
-#welcome-face {
-    float: right;
-    text-align: right;
-}
-
-#welcome-face>img {
-    margin-right: 64px;
 }
 
 .container {
@@ -41,17 +27,12 @@ h1 {
     margin-bottom: 7.5%;
 }
 
-p {
-    font-family: "JetBrains Mono";
+h2 {
+    font-family: "Lato";
 }
 
-.section-marker {
-    text-align: center;
-    font-family: "Newgrounds";
-    font-size: 32px;
-    height: 10%;
-    /* margin-bottom: 0%; */
-    clear: both;
+p {
+    font-family: "Lato";
 }
 
 #intro-blurb {
@@ -85,11 +66,35 @@ p {
     animation-fill-mode: forwards;
 }
 
+#info {
+    position: absolute;
+    top: 0%;
+    margin-left: 8px;
+    color: rgba(255, 255, 255, 0);
+    text-align: left;
+    max-width: 101%;
+    font-size: 14px;
+    user-select: none; /* supported by Chrome and Opera */
+    -webkit-user-select: none; /* Safari */
+    -khtml-user-select: none; /* Konqueror HTML */
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* Internet Explorer/Edge */
+}
+
+#info > h1 {
+    font-size: 18px;
+}
+
+#info > h2 {
+    font-size: 14px;
+}
+
 .game {
     margin: 25px;
     text-align: center;
     width: 320px;
     height: 180px;
+    position: relative;
 }
 
 .game-title {
