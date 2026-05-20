@@ -4,7 +4,7 @@ title = "Test Thumbnail"
 [extra]
 thumbnail = "fake.png"
 game_title = "My Best Game of all time"
-game_link = "migmoog.newgrounds.com"
+game_link = "https://migmoog.newgrounds.com"
 +++
 
 # This is a thumbnail about a game
