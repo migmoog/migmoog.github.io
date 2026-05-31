@@ -6,8 +6,9 @@
 {{ super() }}
 
 <div class="container">
-        {% for page in paginator.pages %}
-                 {% if page.extra.thumbnail is defined %}
+        {% set thumbs = get_section(path="code/thumbnails/_index.md") %}
+        {% for page in thumbs.pages %}
+                 {% if page.extra.thumbnail %}
                         {{ thumb_macros::thumbnail(page=page) }}
                  {% endif %}
         {% endfor %}

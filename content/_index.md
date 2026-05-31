@@ -3,12 +3,14 @@ title = "About"
 template = "section.html"
 +++
 
-{{ resize_image(path="facepic.jpg", width=320, height=500, op="fit_width") }}
+<div>
+    {{resize_image(path="facepic.jpg", width=320, height=500, op="fit_width")}}
+    <h6 style="margin-top: 0.5em">I solemnly swear I had nothing to do with the building behind me :-)</h6>
+</div>
 
 ## Jeremy Gordon is a
-
 - programmer
-- cybersecurity student
+- cybersecurity nerd
 - digital artist
 - game developer
 

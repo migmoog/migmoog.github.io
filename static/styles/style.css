@@ -69,16 +69,16 @@ p {
 
 .navbar-item {
     width: 100%;
-    background-color: blue;
+    background-color: #ff613a;
     display: flex;
     justify-content: center;
     padding-top: 10px;
     padding-bottom: 14px;
-    box-shadow: green 0px 15px 0px 0px 
+    box-shadow: #eb3e2d 0px 15px 0px 0px;
 }
 
 .navbar-item:hover {
-    background-color: red;
+    background-color: #ff6100;
 }
 
 .content {

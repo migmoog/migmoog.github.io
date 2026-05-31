@@ -1,6 +1,8 @@
 +++
 title = "Test Thumbnail"
 
+# ignore this test, remove if you want it to be seen
+render = false
 [extra]
 thumbnail = "fake.png"
 game_title = "My Best Game of all time"
