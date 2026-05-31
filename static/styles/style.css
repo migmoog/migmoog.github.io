@@ -8,6 +8,16 @@
     src: url("../font/Lato-Regular.ttf")
 }
 
+html {
+    font-size: 18px;
+    font-family: "Lato";
+}
+@media (max-width: 572px) {
+    html {
+        font-size: 16px;
+    }
+}
+
 body {
     background-color: #ffdfba;
     margin: 0px;
@@ -15,9 +25,9 @@ body {
 }
 
 h1 {
-    font-size: 48px;
     font-family: 'Newgrounds', Fallback, sans-serif;
     font-style: italic;
+    font-size: 2.35em;
 }
 
 .container {
@@ -35,9 +45,11 @@ h2 {
 p {
     font-family: "Lato";
 }
+
+
+
 .main-section {
     text-align: center;
-    font-size: 18px;
 }
 
 
