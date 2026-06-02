@@ -1,0 +1,17 @@
+{% extends "section.html" %}
+
+{% import "thumbnails.html" as thumb_macros %}
+
+{% block content %}
+{{ super() }}
+
+<div class="container">
+        {% set thumbs = get_section(path="code/thumbnails/_index.md") %}
+        {% for page in thumbs.pages %}
+                 {% if page.extra.thumbnail %}
+                        {{ thumb_macros::thumbnail(page=page) }}
+                 {% endif %}
+        {% endfor %}
+</div>
+
+{% endblock content %}
