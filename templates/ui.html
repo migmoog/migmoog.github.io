@@ -1,0 +1,14 @@
+{% macro navbar_item(icon_path, page) %}
+        <div class="navbar-item"
+             onclick="window.location.assign('{{ page }}')">
+                <img src={{ get_url(path=icon_path) }}>
+        </div>
+{% endmacro navbar_item -%}
+
+{% macro footer_item(icon_path, link) %}
+        <div class="footer-item">
+                <a href={{ link }}>
+                <iframe src={{ get_url(path=icon_path) }} width="32px" height="32px" sandbox></iframe>
+                </a>
+        </div>
+{% endmacro footer_item -%}

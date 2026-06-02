@@ -103,3 +103,21 @@ p {
     /* padding-left: 2.5%; */
     /* padding-right: 2.5%; */
 }
+
+/* would be good to make this a class later on */
+footer {
+    width: max( 15%, 1em );
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+}
+
+.footer-item {
+    background-color: #ff6100;
+    display: block;
+}
+
+.footer-item iframe {
+    border: none;
+    display: block;
+}
