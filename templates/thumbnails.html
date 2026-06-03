@@ -1,7 +1,8 @@
 {% macro thumbnail(page) %}
         <a href="{{ page.extra.game_link }}" target="_blank">
             <div class="game">
-                <img src={{ "images/thumbnails/" ~ page.extra.thumbnail }} class="thumbnail" alt="">
+                {% set thumbnail_source = get_url(path="images/thumbnails/" ~ page.extra.thumbnail) %}
+                <img src="{{ thumbnail_source }}" class="thumbnail" alt="">
                 <p class="game-title">{{ page.title }}</p>
                 <div id="info">
                     {{ page.content | safe }}
